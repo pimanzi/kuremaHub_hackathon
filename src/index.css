@@ -115,3 +115,82 @@ body {
 .swiper-slide-prev {
   transform: none !important;
 }
+
+.loader {
+  animation: rotate 1s infinite;
+  height: 80px;
+  width: 80px;
+}
+
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 35px;
+  width: 35px;
+}
+
+.loader:before {
+  animation: ball1 1s infinite;
+  background-color: #2c3e50;
+  box-shadow: 50px 0 0 #34495e;
+  margin-bottom: 15px;
+}
+
+.loader:after {
+  animation: ball2 1s infinite;
+  background-color: #34495e;
+  box-shadow: 50px 0 0 #2c3e50;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg) scale(0.8);
+  }
+  50% {
+    transform: rotate(360deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(720deg) scale(0.8);
+  }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 50px 0 0 #34495e;
+  }
+  50% {
+    box-shadow: 0 0 0 #34495e;
+  }
+  100% {
+    box-shadow: 50px 0 0 #34495e;
+  }
+}
+
+@keyframes ball2 {
+  0% {
+    box-shadow: 50px 0 0 #2c3e50;
+  }
+  50% {
+    box-shadow: 0 0 0 #2c3e50;
+  }
+  100% {
+    box-shadow: 50px 0 0 #2c3e50;
+  }
+}
+
+/* Add these styles for the rolling gallery */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
