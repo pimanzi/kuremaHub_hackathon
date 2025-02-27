@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 
-=======
->>>>>>> de42a33c0a2d0b41b4c21c19b5233bab22f6c3f6
 import Hero from '../components/Hero';
 import Features from '@/components/Features';
 import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
