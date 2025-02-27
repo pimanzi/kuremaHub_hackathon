@@ -67,18 +67,25 @@ const Home = () => {
       </section>
 
       {/* Featured Artworks */}
-      <section className="py-28 bg-neutral-white overflow-hidden">
+      <section className="py-16 bg-[#F8FAFC]">
         <div className="container mx-auto">
-          <h2 className="text-4xl text-center mb-2 font-['Baskerville'] text-primary">
+          <h2 className="text-4xl text-center mb-12 font-['Baskerville'] text-primary">
             Featured ArtWorks
           </h2>
-          <RollingGallery arts={arts}></RollingGallery>
-        </div>
+          {arts && arts.length > 0 ? (
+            <RollingGallery arts={arts} autoplay={true} pauseOnHover={true} />
+          ) : (
+            <div className="text-center text-gray-500">
+              No artworks available
+            </div>
+          )}
 
-        <div className="flex justify-center">
-          <button className="bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors">
-            Explore Gallery
-          </button>
+          <div className="flex justify-center ">
+            {' '}
+            <button className="bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors">
+              Explore Gallery
+            </button>
+          </div>
         </div>
       </section>
 
