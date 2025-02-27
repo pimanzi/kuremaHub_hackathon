@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import Hero from '../components/Hero';
 
 const Home = () => {
@@ -197,3 +198,4 @@ const Home = () => {
 };
 
 export default Home;
+
