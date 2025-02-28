@@ -1,18 +1,15 @@
 import { useState } from 'react';
 //import Footer from '../components/Footer'
-
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { useArts } from '@/features/arts/useArts';
 import RollingGallery from '../components/RollingGallery';
-<<<<<<< HEAD
-import NavBar from '../components/NavBar.jsx';
-=======
 import NavBar from '../components/NavBar'
->>>>>>> b775dd246f94abefe8a2711c934647a3fb22146a
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
+import ChatBot from '@/components/ArtChartBot/ChatBot';
+
 
 const Home = () => {
   const { arts, isLoading } = useArts();
@@ -101,7 +98,20 @@ const Home = () => {
 
       <FAQ></FAQ>
       {/* Call to Action */}
-      <Footer/>
+
+      <section className="py-28 bg-primary text-neutral-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl mb-6">Ready To Show Case your Arts</h2>
+          <p className="mb-8">
+            Join Other Artists who trust us to showcase their artwork
+          </p>
+          <button className="bg-neutral-white text-primary px-8 py-3 rounded-full font-semibold">
+            Contact Us
+          </button>
+        </div>
+      </section>
+      <ChatBot />
+
     </div>
   );
 };

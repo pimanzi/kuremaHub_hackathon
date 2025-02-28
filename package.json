@@ -10,15 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
+
     "@radix-ui/react-popover": "^1.1.6",
-=======
+
     "@headlessui/react": "^2.2.0",
->>>>>>> b775dd246f94abefe8a2711c934647a3fb22146a
+
+
+    "@radix-ui/react-avatar": "^1.1.3",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-slot": "^1.1.2",
+
     "@supabase/supabase-js": "^2.49.1",
     "@tanstack/react-query": "^5.66.9",
+    "axios": "^1.8.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
     "framer-motion": "^12.4.7",
     "lucide-react": "^0.476.0",
     "prop-types": "^15.8.1",
