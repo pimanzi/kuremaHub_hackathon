@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@radix-ui/react-popover": "^1.1.6",
+=======
+    "@headlessui/react": "^2.2.0",
+>>>>>>> b775dd246f94abefe8a2711c934647a3fb22146a
     "@supabase/supabase-js": "^2.49.1",
     "@tanstack/react-query": "^5.66.9",
     "class-variance-authority": "^0.7.1",

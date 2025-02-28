@@ -1,6 +1,9 @@
 // src/App.jsx
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
+//import Home from './pages/Home';
+//import Trial from './pages/Trial'
+//import Trial from './pages/Trial';
+
 import Search from './pages/Search';
 import Trial from './pages/Trial';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
