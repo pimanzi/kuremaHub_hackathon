@@ -6,6 +6,7 @@ import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { useArts } from '@/features/useArts';
 import RollingGallery from '../components/RollingGallery';
 import FAQ from '@/components/FAQ';
+import ChatBot from '@/components/ArtChartBot/ChatBot';
 
 const Home = () => {
   const { arts, isLoading } = useArts();
@@ -97,6 +98,7 @@ const Home = () => {
           </button>
         </div>
       </section>
+      <ChatBot />
     </div>
   );
 };
