@@ -1,18 +1,19 @@
-import { useState } from 'react';
 //import Footer from '../components/Footer'
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { useArts } from '@/features/arts/useArts';
 import RollingGallery from '../components/RollingGallery';
-import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar';
 import FAQ from '@/components/FAQ';
-import Footer from '@/components/Footer';
 import ChatBot from '@/components/ArtChartBot/ChatBot';
-
+import { useNavigate } from 'react-router-dom';
+import Footer from '@/components/Footer';
+import SpotlightCard from '@/components/SpotlightCard';
 
 const Home = () => {
   const { arts, isLoading } = useArts();
+  const navigate = useNavigate();
 
   const whyChooseUs = [
     {
@@ -89,7 +90,12 @@ const Home = () => {
 
           <div className="flex justify-center ">
             {' '}
-            <button className="bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors">
+            <button
+              onClick={() => {
+                navigate('catalogue');
+              }}
+              className="bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors"
+            >
               Explore Gallery
             </button>
           </div>
@@ -99,19 +105,26 @@ const Home = () => {
       <FAQ></FAQ>
       {/* Call to Action */}
 
-      <section className="py-28 bg-primary text-neutral-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl mb-6">Ready To Show Case your Arts</h2>
-          <p className="mb-8">
-            Join Other Artists who trust us to showcase their artwork
-          </p>
-          <button className="bg-neutral-white text-primary px-8 py-3 rounded-full font-semibold">
-            Contact Us
-          </button>
+      <div className="bg-white pb-10">
+        <div className="  mx-auto w-full lg:w-[40vw]">
+          <SpotlightCard spotlightColor="rgba(52, 73, 94, 0.3)">
+            <div className="w-full flex flex-col items-center py-9">
+              <h2 className="text-4xl mb-6">Ready To Show Case your Arts</h2>
+              <p className="mb-8">
+                Join Other Artists who trust us to showcase their artwork
+              </p>
+              <button className="bg-primary text-neutral-white px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-accent transition-colors  text-center">
+                <a href="tel:0790101642" className="block">
+                  Contact us
+                </a>
+              </button>
+            </div>
+          </SpotlightCard>
         </div>
-      </section>
-      <ChatBot />
+      </div>
 
+      <Footer></Footer>
+      <ChatBot />
     </div>
   );
 };

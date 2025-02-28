@@ -3,8 +3,10 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
   const slides = [
     {
       title: 'Discover Painting Masterpieces',
@@ -61,10 +63,30 @@ const Hero = () => {
         pagination={{
           clickable: true,
         }}
-        navigation={true}
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+          // Responsive navigation visibility
+          enabled: true,
+          hideOnClick: true,
+        }}
         loop={true}
         speed={800}
         className="w-full h-full mySwiper"
+        breakpoints={{
+          // When window width is >= 320px
+          320: {
+            navigation: {
+              enabled: false,
+            },
+          },
+          // When window width is >= 768px
+          768: {
+            navigation: {
+              enabled: true,
+            },
+          },
+        }}
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="w-full">
@@ -80,35 +102,37 @@ const Hero = () => {
               />
 
               {/* Content Container */}
-              <div className="relative max-w-7xl mx-auto px-4 md:px-8 flex items-center h-full">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center h-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 items-center">
                   {/* Text Content */}
-                  <div className="space-y-6 z-10">
-                    <span className="text-accent font-semibold">
+                  <div className="space-y-4 sm:space-y-5 md:space-y-6 z-10">
+                    <span className="text-accent font-semibold block">
                       {slide.category}
                     </span>
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-['Baskerville'] text-primary">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Baskerville'] text-primary leading-tight">
                       {slide.title}
                     </h1>
-                    <p className="text-lg md:text-xl text-gray-700">
+                    <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-xl">
                       {slide.description}
                     </p>
-                    <div className="flex gap-4 justify-center">
-                      <button className="bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors">
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
+                      <button
+                        onClick={() => {
+                          navigate('/catalogue');
+                        }}
+                        className="bg-primary text-neutral-white px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-accent transition-colors w-full sm:w-auto text-center"
+                      >
                         Explore Gallery
                       </button>
-                      {/* <button className="border-2 border-primary text-primary px-8 py-3 rounded-full hover:bg-primary hover:text-neutral-white transition-colors">
-                        Learn More
-                      </button> */}
                     </div>
                   </div>
 
-                  {/* Image */}
-                  <div className="hidden md:block">
+                  {/* Image - Hidden on mobile, visible from sm breakpoint up */}
+                  <div className="hidden sm:block">
                     <img
                       src={slide.image}
                       alt={slide.title}
-                      className="w-full h-[500px] object-cover rounded-lg shadow-2xl"
+                      className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover rounded-lg shadow-2xl"
                     />
                   </div>
                 </div>
@@ -117,6 +141,12 @@ const Hero = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Custom Navigation Buttons - Only visible on larger screens */}
+      <div className="hidden md:block">
+        <div className="swiper-button-prev !text-primary !opacity-70 hover:!opacity-100 transition-opacity"></div>
+        <div className="swiper-button-next !text-primary !opacity-70 hover:!opacity-100 transition-opacity"></div>
+      </div>
     </section>
   );
 };
