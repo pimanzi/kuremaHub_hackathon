@@ -1,4 +1,3 @@
-
 import Search from './pages/Search';
 import Home from './pages/Home';
 //import Trial from './pages/Trial'
@@ -6,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ArtPage from './features/arts/ArtPage';
 import ArtShow from './pages/ArtShow';
 import { Toaster } from 'react-hot-toast';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NavBar from './components/NavBar';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,14 +19,16 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Home></Home>}></Route>
-          <Route element={<Search></Search>} path="catalogue"></Route>
-          <Route element={<ArtShow></ArtShow>} path="art/:id"></Route>
-        </Routes>
-      </BrowserRouter>
+      <Router>
+        <div className="app">
+          
+          <Routes>
+            <Route index element={<Home></Home>}></Route>
+            <Route element={<Search></Search>} path="catalogue"></Route>
+            <Route element={<ArtShow></ArtShow>} path="art/:id"></Route>
+          </Routes>
+        </div>
+      </Router>
       <Toaster
         position="top-center"
         gutter={12}
@@ -46,8 +49,6 @@ export default function App() {
           },
         }}
       />
-
-      <Home />
     </QueryClientProvider>
   );
 }
