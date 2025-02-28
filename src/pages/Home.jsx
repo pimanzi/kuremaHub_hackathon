@@ -1,9 +1,7 @@
-import { useState } from 'react';
-
 import Hero from '../components/Hero';
 import Features from '@/components/Features';
 import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
-import { useArts } from '@/features/useArts';
+import { useArts } from '@/features/arts/useArts';
 import RollingGallery from '../components/RollingGallery';
 import FAQ from '@/components/FAQ';
 
@@ -109,4 +107,3 @@ const Home = () => {
 };
 
 export default Home;
-

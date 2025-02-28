@@ -65,7 +65,6 @@ const RollingGallery = ({ autoplay = true, pauseOnHover = true, arts }) => {
     if (autoplay && !isScreenSizeSm) startInfiniteSpin(finalAngle);
   };
 
-  // Add hover handlers for desktop
   const handleMouseEnter = () => {
     if (autoplay && pauseOnHover && !isScreenSizeSm) {
       controls.stop();
@@ -86,20 +85,16 @@ const RollingGallery = ({ autoplay = true, pauseOnHover = true, arts }) => {
       if (!smallGalleryRef.current) return;
       const imageWidth = smallGalleryRef.current.offsetWidth;
 
-      // If we're moving from the last image to the first, create a smooth loop transition
       if (currentIndex === arts.length - 1 && index === 0) {
-        // First animate to one more position to the left (beyond the last image)
         smallGalleryControls
           .start({
             x: -arts.length * imageWidth,
             transition: { duration: 0.3, ease: 'easeIn' },
           })
           .then(() => {
-            // Then instantly jump to the first image without animation
             smallGalleryControls.set({ x: 0 });
           });
       } else {
-        // Normal transition between images
         smallGalleryControls.start({
           x: -index * imageWidth,
           transition: { type: 'spring', stiffness: 300, damping: 30 },

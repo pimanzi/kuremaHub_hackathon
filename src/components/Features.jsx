@@ -1,8 +1,8 @@
 import {
-  MdCollections, // For Managing Arts
-  MdGroups, // For Collaboration
-  MdSmartToy, // For AI Chatbot
-  MdAutoAwesome, // For AI Assistant
+  MdCollections,
+  MdGroups,
+  MdSmartToy,
+  MdAutoAwesome,
 } from 'react-icons/md';
 import { FaPalette, FaHandshake, FaRobot, FaLightbulb } from 'react-icons/fa';
 import SpotlightCard from './SpotlightCard';

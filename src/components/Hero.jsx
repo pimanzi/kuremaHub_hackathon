@@ -66,7 +66,6 @@ const Hero = () => {
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="w-full">
             <div className="relative w-full h-full">
-              {/* Background Image with Blur */}
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
@@ -77,11 +76,9 @@ const Hero = () => {
                 }}
               />
 
-              {/* Content Container */}
               <div className="relative h-full max-w-7xl mx-auto px-4 md:px-8">
                 <div className="h-full flex items-center">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    {/* Text Content */}
                     <div className="space-y-6 z-10">
                       <span className="text-accent font-semibold">
                         {slide.category}
@@ -102,7 +99,6 @@ const Hero = () => {
                       </div>
                     </div>
 
-                    {/* Image */}
                     <div className="hidden md:block">
                       <img
                         src={slide.image}
