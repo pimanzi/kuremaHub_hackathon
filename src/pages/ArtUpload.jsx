@@ -12,7 +12,7 @@ const ArtUpload = () => {
           className="text-center mb-10 md:mb-16"
         >
           <div className="bg-primary/5 text-primary-foreground/80 text-xs font-medium py-1 px-3 rounded-full inline-block mb-3">
-            Artify • Describe • Create
+            KuremaHub
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             Create Art
