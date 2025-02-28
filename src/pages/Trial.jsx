@@ -4,4 +4,5 @@ import ArtUpload from './ArtUpload'
 
 export default  function Trial(){
     return <ArtUpload />
+
 }

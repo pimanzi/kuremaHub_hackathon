@@ -1,11 +1,15 @@
-import Hero from '../components/Hero';
+import { useState } from 'react';
+//import Footer from '../components/Footer'
+import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { useArts } from '@/features/arts/useArts';
 import RollingGallery from '../components/RollingGallery';
-import NavBar from '../components/NavBar.jsx'
+import NavBar from '../components/NavBar'
 import FAQ from '@/components/FAQ';
+import Footer from '@/components/Footer';
 import ChatBot from '@/components/ArtChartBot/ChatBot';
+
 
 const Home = () => {
   const { arts, isLoading } = useArts();
@@ -40,13 +44,13 @@ const Home = () => {
   return (
     <div className="font-['Baskerville'] bg-secondary min-h-screen">
       {/* Hero Section */}
-      <NavBar/>
+      <NavBar />
       <Hero></Hero>
 
       {/* Features Section */}
       <Features></Features>
       {/* Why Choose Us */}
-      <section className="py-28">
+      <section id="about" className="py-28">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl text-center mb-12 font-['Baskerville'] text-primary">
             Why Choose Us
@@ -70,7 +74,7 @@ const Home = () => {
       </section>
 
       {/* Featured Artworks */}
-      <section className="py-16 bg-[#F8FAFC]">
+      <section id="arts" className="py-16 bg-[#F8FAFC]">
         <div className="container mx-auto">
           <h2 className="text-4xl text-center mb-12 font-['Baskerville'] text-primary">
             Featured ArtWorks
@@ -94,6 +98,7 @@ const Home = () => {
 
       <FAQ></FAQ>
       {/* Call to Action */}
+
       <section className="py-28 bg-primary text-neutral-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl mb-6">Ready To Show Case your Arts</h2>
@@ -106,6 +111,7 @@ const Home = () => {
         </div>
       </section>
       <ChatBot />
+
     </div>
   );
 };

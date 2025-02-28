@@ -1,6 +1,15 @@
-const Card = ({ art }) => {
+import { useNavigate } from 'react-router-dom';
+
+const Card = ({ art, id }) => {
+  const navigate = useNavigate();
   return (
-    <div className="w-full lg:max-w-[450px] min-w-[200px] h-auto rounded-lg overflow-hidden shadow-lg relative group">
+    <div
+      onClick={() => {
+        console.log('yes');
+        navigate(`/art/${id}`);
+      }}
+      className="w-full lg:max-w-[450px] min-w-[200px] h-auto rounded-lg overflow-hidden shadow-lg relative group"
+    >
       <div className="h-[50vh] bg-gray-300 relative">
         <img
           src={art.image}
