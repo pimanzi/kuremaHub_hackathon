@@ -3,6 +3,7 @@ import Features from '@/components/Features';
 import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
 import { useArts } from '@/features/arts/useArts';
 import RollingGallery from '../components/RollingGallery';
+import NavBar from '../components/NavBar.jsx'
 import FAQ from '@/components/FAQ';
 
 const Home = () => {
@@ -38,6 +39,7 @@ const Home = () => {
   return (
     <div className="font-['Baskerville'] bg-secondary min-h-screen">
       {/* Hero Section */}
+      <NavBar/>
       <Hero></Hero>
 
       {/* Features Section */}

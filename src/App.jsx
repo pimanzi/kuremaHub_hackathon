@@ -1,5 +1,4 @@
 // src/App.jsx
-//import Home from './pages/Home';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Search from './pages/Search';
