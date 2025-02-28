@@ -4,11 +4,12 @@ import Card from './Card';
 import { CiSearch } from 'react-icons/ci';
 import { useArts } from '@/features/arts/useArts';
 import Pagination from '../../components/Pagination';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import FilterComponent from './FilterComponent';
 import SortComponent from './SortComponent';
 
 const SearchComp = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category') || 'all';
   const sortOption = searchParams.get('sortBy') || 'date-asc';
@@ -98,7 +99,7 @@ const SearchComp = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {currentArts.map((art) => (
-          <Card art={art} key={art.id} />
+          <Card art={art} key={art.id} id={art.id} />
         ))}
       </div>
       {/* Pagination */}

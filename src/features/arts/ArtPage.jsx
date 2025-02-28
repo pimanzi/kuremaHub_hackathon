@@ -3,11 +3,14 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useArts } from './useArts';
 import Stars from '@/components/Stars';
 import { useReviews } from '../Reviews/useReviews';
+import { useParams } from 'react-router-dom';
+import { LeaveReview } from '../Reviews/PopverComponent';
 
 const ArtPage = () => {
   const { reviews } = useReviews();
+  const { id } = useParams();
   const { isLoading, arts } = useArts();
-  const id = 1;
+
   const artShow = arts?.find((art) => art.id === Number(id));
   const Author =
     artShow?.authUsers?.firstName + ' ' + artShow?.authUsers?.lastName;
@@ -64,7 +67,7 @@ const ArtPage = () => {
               </h1>
 
               <div className="flex items-center mb-4">
-                <Stars rating={rateAverage} color="#ffcb05" size={24} />
+                <Stars rating={rateAverage} color="#2C3E50" size={24} />
                 <span className="text-gray-600">
                   ({rateAverage.toFixed(1)} / 5)
                 </span>
@@ -99,9 +102,7 @@ const ArtPage = () => {
                 </a>
               </div>
 
-              <button className="w-full bg-[#FFFFFF] text-[#2C3E50] py-3 rounded-lg border border-[#2C3E50] hover:bg-[#E9ECEF] transition duration-200">
-                Add a Review
-              </button>
+              <LeaveReview id={id}></LeaveReview>
             </div>
           </div>
 

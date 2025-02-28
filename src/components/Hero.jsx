@@ -47,7 +47,10 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative h-[90vh] bg-secondary overflow-hidden">
+    <section
+      id="home"
+      className="relative h-[90vh] bg-secondary overflow-hidden"
+    >
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         slidesPerView={1}
@@ -90,13 +93,13 @@ const Hero = () => {
                     <p className="text-lg md:text-xl text-gray-700">
                       {slide.description}
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 justify-center">
                       <button className="bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors">
                         Explore Gallery
                       </button>
-                      <button className="border-2 border-primary text-primary px-8 py-3 rounded-full hover:bg-primary hover:text-neutral-white transition-colors">
+                      {/* <button className="border-2 border-primary text-primary px-8 py-3 rounded-full hover:bg-primary hover:text-neutral-white transition-colors">
                         Learn More
-                      </button>
+                      </button> */}
                     </div>
                   </div>
 
