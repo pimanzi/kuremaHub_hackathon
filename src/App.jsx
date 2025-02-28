@@ -1,6 +1,6 @@
 // src/App.jsx
-//import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+//import Home from './pages/Home';
 //import Trial from './pages/Trial'
 //import Trial from './pages/Trial';
 
@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Home></Home>
+      <ArtShow></ArtShow>
     </QueryClientProvider>
   );
 }
