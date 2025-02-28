@@ -1,11 +1,12 @@
 import { useState } from 'react';
 //import Footer from '../components/Footer'
-import Hero from '../components/Hero';
+
+import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
-import { useArts } from '@/features/useArts';
+import { useArts } from '@/features/arts/useArts';
 import RollingGallery from '../components/RollingGallery';
-import NavBar from '../components/NavBar.jsx'
+import NavBar from '../components/NavBar'
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 
@@ -102,4 +103,3 @@ const Home = () => {
 };
 
 export default Home;
-

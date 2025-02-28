@@ -1,7 +1,7 @@
 import { GoPlus } from 'react-icons/go';
-import SearchComp from '../features/catalogue/SearchComp';
+import ArtPage from '@/features/arts/ArtPage';
 
-export default function Search() {
+export default function ArtShow() {
   return (
     <section className="px-10 py-7">
       <nav className="flex justify-between items-center mb-8">
@@ -12,7 +12,7 @@ export default function Search() {
         </div>
       </nav>
 
-      <SearchComp></SearchComp>
+      <ArtPage></ArtPage>
     </section>
   );
 }
