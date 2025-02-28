@@ -1,4 +1,3 @@
-// src/components/SearchComp.jsx
 import { useState } from 'react';
 import Card from './Card';
 import { CiSearch } from 'react-icons/ci';
@@ -13,6 +12,7 @@ const SearchComp = () => {
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category') || 'all';
   const sortOption = searchParams.get('sortBy') || 'date-asc';
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { isLoading, arts } = useArts();
   const itemsPerPage = 12; // Number of cards per page
@@ -47,12 +47,33 @@ const SearchComp = () => {
     // Sort by price
     return (a.price - b.price) * modifier;
   });
-  // Calculate the total number of pages
-  const totalPages = Math.ceil(sortedArts?.length / itemsPerPage);
 
-  // Get the current items to display
+  // Search functionality
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
+  // Filter by search term
+  const searchedArts =
+    searchTerm.trim() === ''
+      ? sortedArts
+      : sortedArts?.filter((art) => {
+          const searchLower = searchTerm.toLowerCase();
+          return (
+            art.title?.toLowerCase().includes(searchLower) ||
+            art.description?.toLowerCase().includes(searchLower) ||
+            art.artist?.toLowerCase().includes(searchLower) ||
+            art.category?.toLowerCase().includes(searchLower)
+          );
+        });
+
+  // Calculate the total number of pages based on searched arts
+  const totalPages = Math.ceil(searchedArts?.length / itemsPerPage);
+
+  // Get the current items to display from searched arts
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentArts = sortedArts.slice(startIndex, startIndex + itemsPerPage);
+  const currentArts = searchedArts.slice(startIndex, startIndex + itemsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -86,6 +107,8 @@ const SearchComp = () => {
             id="searchbar"
             className="w-full outline-none"
             placeholder="Search artwork..."
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
           <CiSearch className="text-xl" />
         </div>
