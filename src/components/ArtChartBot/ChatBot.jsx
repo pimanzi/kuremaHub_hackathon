@@ -21,7 +21,6 @@ const ChatBot = () => {
     const userMessage = { id: Date.now(), text, isUser: true };
     setMessages(prev => [...prev, userMessage]);
     
-    // Show typing indicator
     setIsTyping(true);
     const typingMessage = { id: 'typing', text: '', isUser: false, typing: true };
     setMessages(prev => [...prev, typingMessage]);
@@ -30,7 +29,6 @@ const ChatBot = () => {
       // Generate AI response
       const response = await generateAIResponse(text, messages);
       
-      // Remove typing indicator and add AI response
       setMessages(prev => 
         prev.filter(msg => msg.id !== 'typing').concat({
           id: Date.now() + 1,

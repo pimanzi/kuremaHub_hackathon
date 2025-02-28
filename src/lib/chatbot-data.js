@@ -41,42 +41,76 @@ export const INITIAL_MESSAGE = {
     }
   };
   // Simulated AI response generation with a delay
-  export const generateAIResponse = async (message, conversationHistory) => {
-    // Check if the message matches any FAQ first
-    const lowerMessage = message.toLowerCase();
-    
-    // Check for platform-related questions
-    for (const [question, answer] of Object.entries(FAQ_DATA.platform)) {
-      if (lowerMessage.includes(question.toLowerCase())) {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        return answer;
+  export const generateAIResponse = async (userMessage, messageHistory) => {
+    // Debug: Log incoming message
+    console.log('Received message:', userMessage);
+
+    // First check if this is a FAQ question
+    for (const category in FAQ_DATA) {
+      if (FAQ_DATA[category][userMessage]) {
+        return FAQ_DATA[category][userMessage];
       }
     }
+
+    // Debug: Log that we're attempting API call
+    console.log('No FAQ match found, attempting API call');
+
+    const API_KEY = import.meta.env.VITE_API_KEY;
     
-    // Check for art knowledge questions
-    for (const [question, answer] of Object.entries(FAQ_DATA.art_knowledge)) {
-      if (lowerMessage.includes(question.toLowerCase())) {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        return answer;
-      }
+    if (!API_KEY) {
+      throw new Error('The API key is not configured');
     }
-    
-    // Generic responses for unmatched queries
-    const genericResponses = [
-      `That's an interesting question about ${message.split(' ').slice(0, 3).join(' ')}. In the art world, there are many perspectives on this. Could you tell me more specifically what you'd like to know?`,
-      
-      "I appreciate your curiosity! While I don't have all the details on that specific topic, I can help you explore related areas of art. Would you like to know about different art movements, techniques, or our platform features?",
-      
-      "Great question! Art is such a vast field with endless exploration. To give you the most helpful information, could you clarify what aspect of this topic interests you most?",
-      
-      "Thanks for your question. The beauty of art is in its diversity and subjective nature. I'd love to discuss this more - could you share what sparked your interest in this particular topic?"
-    ];
-    
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Return a random generic response
-    return genericResponses[Math.floor(Math.random() * genericResponses.length)];
+
+    try {
+      // Debug: Log API request
+      console.log('Sending API request with payload:', {
+        model: 'deepseek/deepseek-r1:free',
+        messageCount: messageHistory.length + 1
+      });
+
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_KEY}`,
+          'HTTP-Referer': window.location.href,
+          'X-Title': 'Art Assistant'
+        },
+        body: JSON.stringify({
+          model: 'deepseek/deepseek-r1:free',
+          messages: [
+            { role: 'system', content: 'You are a helpful art assistant who provides information about artworks, artists, and art history.' },
+            ...messageHistory.map(msg => ({
+              role: msg.isUser ? 'user' : 'assistant',
+              content: msg.text
+            })),
+            { role: 'user', content: userMessage }
+          ],
+          temperature: 0.7,
+          max_tokens: 500
+        })
+      });
+
+      // Debug: Log raw response
+      console.log('Raw API response status:', response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        console.error('API Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData
+        });
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      // Debug: Log parsed response
+      console.log('Parsed API response:', data);
+
+      return data.choices[0].message.content;
+    } catch (error) {
+      console.error('Detailed error:', error);
+      throw error;
+    }
   };
