@@ -13,11 +13,7 @@ export default function Search() {
             navigate('/home');
           }}
         >
-          <img
-            src="../public/images/logoHub.png"
-            alt="logo"
-            className="w-full"
-          />
+          <img src="/images/logoHub.png" alt="logo" className="w-full" />
         </div>
         <button
           onClick={() => {

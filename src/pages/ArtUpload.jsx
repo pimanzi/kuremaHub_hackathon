@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import ArtUploadForm from "../components/artUploadForm";
-import ChatBot from "@/components/ArtChartBot/ChatBot";
+import { motion } from 'framer-motion';
+import ArtUploadForm from '../components/artUploadForm';
+import ChatBot from '@/components/ArtChartBot/ChatBot';
 const ArtUpload = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
@@ -18,8 +18,8 @@ const ArtUpload = () => {
             Create Art
           </h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Upload your artwork and with help our AI assistant craft the perfect artistic 
-            description that captures its essence and emotion.
+            Upload your artwork and with help our AI assistant craft the perfect
+            artistic description that captures its essence and emotion.
           </p>
         </motion.div>
         <motion.div
@@ -31,11 +31,9 @@ const ArtUpload = () => {
           <ArtUploadForm />
         </motion.div>
         <div className="mt-16 text-center text-sm text-muted-foreground">
-          <p>
-            KuremaHub.Inc
-          </p>
+          <p>KuremaHub.Inc</p>
         </div>
-        < ChatBot />
+        <ChatBot />
       </div>
     </div>
   );
