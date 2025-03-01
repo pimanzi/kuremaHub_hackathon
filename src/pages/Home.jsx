@@ -10,7 +10,7 @@ import ChatBot from '@/components/ArtChartBot/ChatBot';
 import { useNavigate } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import SpotlightCard from '@/components/SpotlightCard';
-import { MdCollections} from 'react-icons/md';
+import { MdCollections } from 'react-icons/md';
 
 const Home = () => {
   const { arts, isLoading } = useArts();
@@ -76,7 +76,7 @@ const Home = () => {
       </section>
 
       {/* Featured Artworks */}
-      <section id="arts" className="py-16 bg-[#F8FAFC]">
+      <section id="feature" className="py-16 bg-[#F8FAFC]">
         <div className="container mx-auto">
           <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-12 font-['Baskerville'] text-primary">
             Featured ArtWorks
@@ -110,7 +110,9 @@ const Home = () => {
         <div className="  mx-auto w-full lg:w-[60vw]">
           <SpotlightCard spotlightColor="rgba(52, 73, 94, 0.3)">
             <div className="w-full flex flex-col items-center p-20">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6">Ready To Show Case your Arts</h2>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6">
+                Ready To Show Case your Arts
+              </h2>
               <p className="mb-8 md:text-2xl">
                 Join Other Artists who trust us to showcase their artwork
               </p>
