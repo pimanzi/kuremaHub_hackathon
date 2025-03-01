@@ -33,7 +33,7 @@ const ChatMessage = ({ message, isUser }) => {
       <div 
         className={`max-w-[80%] px-4 py-3 rounded-2xl ${
           isUser 
-            ? 'bg-primary text-primary-foreground rounded-tr-none' 
+            ? 'bg-primary text-white rounded-tr-none' 
             : 'bg-secondary text-secondary-foreground rounded-tl-none'
         }`}
       >

@@ -62,22 +62,22 @@ const FAQ = () => {
   return (
     <section id="faq" className="py-28 bg-neutral-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl text-center mb-4 font-['Baskerville'] text-primary">
-          Frequently Asked Questions
+        <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-4 font-['Baskerville'] text-primary">
+          FAQs
         </h2>
-        <p className="text-center text-gray-600 mb-12">
+        <p className="text-center md:text-xl text-gray-600 mb-12">
           Find answers to common questions about Kurema Hub
         </p>
-        <div className="max-w-3xl mx-auto">
+        <div className="w-full mx-auto">
           {faqData.map((faq, index) => (
             <div key={index} className="mb-4">
               <button
-                className="w-full text-left p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200 flex justify-between items-center"
+                className="w-full text-left p-4 rounded-lg bg-gray-50/20 border-2 border-gray-700 hover:bg-gray-100 transition-colors duration-200 flex justify-between items-center"
                 onClick={() =>
                   setActiveIndex(activeIndex === index ? null : index)
                 }
               >
-                <span className="font-semibold text-primary">
+                <span className="font-semibold text-primary md:text-2xl">
                   {faq.question}
                 </span>
                 <span className="text-accent text-xl">

@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ArtShow from './pages/ArtShow';
 import { Toaster } from 'react-hot-toast';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ArtUpload from './pages/ArtUpload';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +23,7 @@ export default function App() {
         <Routes>
           <Route index element={<Home></Home>}></Route>
           <Route element={<Search></Search>} path="catalogue"></Route>
+          <Route element={<Home></Home>} path="home"></Route>
           <Route element={<ArtShow></ArtShow>} path="art/:id"></Route>
         </Routes>
       </BrowserRouter>
