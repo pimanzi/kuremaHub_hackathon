@@ -1,4 +1,3 @@
-import React from 'react';
 const SuccessMessage = ({ artName, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 animate-fade-in">
@@ -19,13 +18,14 @@ const SuccessMessage = ({ artName, onClose }) => {
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </div>
-          
+
           <h2 className="text-2xl font-semibold mb-2">Artwork Submitted</h2>
-          
+
           <p className="text-muted-foreground mb-6">
-            Your artwork "{artName}" has been successfully saved to the database.
+            Your artwork "{artName}" has been successfully saved to the
+            database.
           </p>
-          
+
           <div className="flex justify-center space-x-3">
             <button
               onClick={onClose}

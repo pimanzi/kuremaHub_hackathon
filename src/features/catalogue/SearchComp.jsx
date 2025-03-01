@@ -6,6 +6,7 @@ import Pagination from '../../components/Pagination';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import FilterComponent from './FilterComponent';
 import SortComponent from './SortComponent';
+import { useAuthUsers } from '../Authentication/useAuthUsers';
 
 const SearchComp = () => {
   const navigate = useNavigate();
@@ -15,10 +16,12 @@ const SearchComp = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { isLoading, arts } = useArts();
+  const { authUsers, isLoading: loadingAuth } = useAuthUsers();
+
   const itemsPerPage = 12; // Number of cards per page
   const [currentPage, setCurrentPage] = useState(1);
 
-  if (isLoading)
+  if (isLoading || loadingAuth)
     return (
       <div className="h-screen flex justify-center items-center">
         <div className="loader"></div>
@@ -122,7 +125,7 @@ const SearchComp = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {currentArts.map((art) => (
-          <Card art={art} key={art.id} id={art.id} />
+          <Card art={art} key={art.id} id={art.id} users={authUsers} />
         ))}
       </div>
       {/* Pagination */}

@@ -51,7 +51,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative h-[90vh] bg-secondary overflow-hidden"
+      className="relative h-[90vh] bg-white overflow-hidden md:px-20 md:py-10"
     >
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
@@ -72,7 +72,7 @@ const Hero = () => {
         }}
         loop={true}
         speed={800}
-        className="w-full h-full mySwiper"
+        className="w-full h-full mySwiper rounded-3xl"
         breakpoints={{
           // When window width is >= 320px
           320: {
@@ -83,14 +83,14 @@ const Hero = () => {
           // When window width is >= 768px
           768: {
             navigation: {
-              enabled: true,
+              enabled: false,
             },
           },
         }}
       >
         {slides.map((slide, index) => (
-          <SwiperSlide key={index} className="w-full">
-            <div className="relative w-full h-full">
+          <SwiperSlide key={index} className="w-full ">
+            <div className="relative w-full h-full ">
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
@@ -105,25 +105,18 @@ const Hero = () => {
               <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center h-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 items-center">
                   {/* Text Content */}
-                  <div className="space-y-4 sm:space-y-5 md:space-y-6 z-10">
-                    <span className="text-accent font-semibold block">
+                  <div className="space-y-4 sm:space-y-5 md:space-y-6 z-10 ">
+                    <span className="text-accent font-semibold block md:text-start">
                       {slide.category}
                     </span>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Baskerville'] text-primary leading-tight">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl md:text-start font-['Baskerville'] text-primary leading-tight">
                       {slide.title}
                     </h1>
-                    <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-xl">
+                    <p className="text-base sm:text-lg md:text-xl md:text-start text-gray-700 max-w-xl">
                       {slide.description}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
-                      <button
-                        onClick={() => {
-                          navigate('/catalogue');
-                        }}
-                        className="bg-primary text-neutral-white px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-accent transition-colors w-full sm:w-auto text-center"
-                      >
-                        Explore Gallery
-                      </button>
+                      
                     </div>
                   </div>
 

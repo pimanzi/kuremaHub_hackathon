@@ -3,10 +3,11 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useArts } from './useArts';
 import Stars from '@/components/Stars';
 import { useReviews } from '../Reviews/useReviews';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { LeaveReview } from '../Reviews/PopverComponent';
 
 const ArtPage = () => {
+  const navigate = useNavigate();
   const { reviews } = useReviews();
   const { id } = useParams();
   const { isLoading, arts } = useArts();
@@ -14,6 +15,7 @@ const ArtPage = () => {
   const artShow = arts?.find((art) => art.id === Number(id));
   const Author =
     artShow?.authUsers?.firstName + ' ' + artShow?.authUsers?.lastName;
+  console.log(artShow?.authUsers);
 
   const email = artShow?.authUsers?.email;
   const avatar = artShow?.authUsers?.avatar;
@@ -73,7 +75,12 @@ const ArtPage = () => {
                 </span>
               </div>
 
-              <div className="flex items-center mb-6">
+              <div
+                className="flex items-center mb-6"
+                onClick={() => {
+                  navigate(`/artist/${artShow.authUsers.id}`);
+                }}
+              >
                 <img
                   src={avatar ? avatar : '/images/default-user.jpg'}
                   alt="avatar"
@@ -98,7 +105,7 @@ const ArtPage = () => {
 
               <div className=" flex justify-center w-full bg-[#2C3E50] text-[#E9ECEF] py-3 rounded-lg mb-4 hover:bg-opacity-90 transition duration-200">
                 <a href={`mailto: ${artShow?.authUsers.email}`}>
-                  Chat with Author
+                  Buy me coffee
                 </a>
               </div>
 

@@ -1,7 +1,7 @@
 //import Footer from '../components/Footer'
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
-import { FaPaintBrush, FaShieldAlt, FaUsers } from 'react-icons/fa';
+import { FaPaintBrush, FaUsers } from 'react-icons/fa';
 import { useArts } from '@/features/arts/useArts';
 import RollingGallery from '../components/RollingGallery';
 import NavBar from '../components/NavBar';
@@ -10,6 +10,7 @@ import ChatBot from '@/components/ArtChartBot/ChatBot';
 import { useNavigate } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import SpotlightCard from '@/components/SpotlightCard';
+import { MdCollections } from 'react-icons/md';
 
 const Home = () => {
   const { arts, isLoading } = useArts();
@@ -23,10 +24,10 @@ const Home = () => {
       icon: <FaPaintBrush className="text-3xl text-neutral-white" />,
     },
     {
-      title: 'Secure Transactions',
+      title: 'Online Exhibition',
       description:
-        'Safe and protected payment processing for buyers and sellers',
-      icon: <FaShieldAlt className="text-3xl text-neutral-white" />,
+        'Experience our curated virtual galleries showcasing emerging and established artists in real-time',
+      icon: <MdCollections className="text-3xl text-neutral-white" />,
     },
     {
       title: 'Artist Community',
@@ -43,7 +44,7 @@ const Home = () => {
       </div>
     );
   return (
-    <div className="font-['Baskerville'] bg-secondary min-h-screen">
+    <div className="font-['Baskerville'] min-h-screen">
       {/* Hero Section */}
       <NavBar />
       <Hero></Hero>
@@ -53,7 +54,7 @@ const Home = () => {
       {/* Why Choose Us */}
       <section id="about" className="py-28">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl text-center mb-12 font-['Baskerville'] text-primary">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-12 font-['Baskerville'] text-primary">
             Why Choose Us
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -75,9 +76,9 @@ const Home = () => {
       </section>
 
       {/* Featured Artworks */}
-      <section id="arts" className="py-16 bg-[#F8FAFC]">
+      <section id="feature" className="py-16 bg-[#F8FAFC]">
         <div className="container mx-auto">
-          <h2 className="text-4xl text-center mb-12 font-['Baskerville'] text-primary">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-12 font-['Baskerville'] text-primary">
             Featured ArtWorks
           </h2>
           {arts && arts.length > 0 ? (
@@ -105,12 +106,14 @@ const Home = () => {
       <FAQ></FAQ>
       {/* Call to Action */}
 
-      <div className="bg-white pb-10">
-        <div className="  mx-auto w-full lg:w-[40vw]">
+      <div className="bg-white mb-20">
+        <div className="  mx-auto w-full lg:w-[60vw]">
           <SpotlightCard spotlightColor="rgba(52, 73, 94, 0.3)">
-            <div className="w-full flex flex-col items-center py-9">
-              <h2 className="text-4xl mb-6">Ready To Show Case your Arts</h2>
-              <p className="mb-8">
+            <div className="w-full flex flex-col items-center p-20">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6">
+                Ready To Show Case your Arts
+              </h2>
+              <p className="mb-8 md:text-2xl">
                 Join Other Artists who trust us to showcase their artwork
               </p>
               <button className="bg-primary text-neutral-white px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-accent transition-colors  text-center">
