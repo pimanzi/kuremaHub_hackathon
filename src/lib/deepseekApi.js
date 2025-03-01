@@ -1,5 +1,4 @@
 const API_KEY = import.meta.env.VITE_API_KEY;
-const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 export async function generateDescription(prompt) {
   if (!API_KEY) {
@@ -8,19 +7,19 @@ export async function generateDescription(prompt) {
   }
   
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${API_KEY}`,
-        "HTTP-Referer": window.location.origin, 
+        "HTTP-Referer": window.location.href, 
         "X-Title": "Art Description Generator" 
       },
       body: JSON.stringify({
         model: "deepseek/deepseek-r1:free", 
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
-        max_tokens: 200
+        max_tokens: 500
       }),
     });
 

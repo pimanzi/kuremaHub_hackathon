@@ -21,7 +21,6 @@ const ChatBot = () => {
     const userMessage = { id: Date.now(), text, isUser: true };
     setMessages(prev => [...prev, userMessage]);
     
-    // Show typing indicator
     setIsTyping(true);
     const typingMessage = { id: 'typing', text: '', isUser: false, typing: true };
     setMessages(prev => [...prev, typingMessage]);
@@ -30,7 +29,6 @@ const ChatBot = () => {
       // Generate AI response
       const response = await generateAIResponse(text, messages);
       
-      // Remove typing indicator and add AI response
       setMessages(prev => 
         prev.filter(msg => msg.id !== 'typing').concat({
           id: Date.now() + 1,
@@ -74,7 +72,7 @@ const ChatBot = () => {
             {/* Chat header */}
             <div className="p-4 border-b flex justify-between items-center bg-card">
               <div className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center mr-3">
+                <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center mr-3">
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     width="16" 
@@ -165,7 +163,7 @@ const ChatBot = () => {
         ) : (
           <button 
             onClick={toggleChat}
-            className="w-full h-full rounded-full bg-primary flex items-center justify-center text-primary-foreground"
+            className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center text-gray-200"
           >
             <svg 
               xmlns="http://www.w3.org/2000/svg" 

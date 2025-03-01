@@ -21,8 +21,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Home></Home>}></Route>
-          <Route element={<Home></Home>} path="/home"></Route>
           <Route element={<Search></Search>} path="catalogue"></Route>
+          <Route element={<Home></Home>} path="home"></Route>
           <Route element={<ArtShow></ArtShow>} path="art/:id"></Route>
           <Route
             element={<ArtistProfile></ArtistProfile>}

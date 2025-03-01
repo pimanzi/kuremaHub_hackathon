@@ -20,9 +20,9 @@ export default function Search() {
           />
         </div>
 
-        <div className="flex items-center gap-2 bg-gray-300 py-2 px-5 rounded-full cursor-pointer">
+        <div className="flex items-center gap-2 bg-gray-800 py-2 px-5 rounded-full cursor-pointer">
           <GoPlus />
-          <p>Create Art</p>
+          <p className='text-white'>Create Art</p>
         </div>
       </nav>
 
