@@ -1,72 +1,83 @@
-import { useState, useEffect } from "react";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { useState, useEffect } from 'react';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select";
-import { Label } from "../components/ui/label";
-import { Textarea } from "../components/ui/textarea";
-import FileInput from "../components/ui/file-input";
-import DescriptionGenerator from "../components/descriptionGenerator";
-import ArtPreview from "../components/ArtPreview";
-import { Save as LucideSave, Sparkles as LucideSparkles } from "lucide-react";
-import { motion } from "framer-motion";
+} from '../components/ui/select';
+import { Label } from '../components/ui/label';
+import { Textarea } from '../components/ui/textarea';
+import FileInput from '../components/ui/file-input';
+import DescriptionGenerator from '../components/descriptionGenerator';
+import ArtPreview from '../components/ArtPreview';
+import { Save as LucideSave, Sparkles as LucideSparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useCreateArt } from '@/features/arts/useCreateArt';
 
 // Types and constants moved to the component file
-const ART_TYPES = ["Painting", "Digital Art", "Photography", "Sculpture", "Mixed Media"];
-const CURRENCIES = ["USD", "EUR", "GBP", "JPY", "ETH"];
+const ART_TYPES = [
+  'Painting',
+  'Digital Art',
+  'Photography',
+  'Sculpture',
+  'Mixed Media',
+];
+const CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'ETH'];
 const DEFAULT_FORM_DATA = {
-  title: "",
-  type: "",
-  price: "",
-  currency: "USD",
-  colors: "",
-  theme: "",
-  description: ""
+  title: '',
+  type: '',
+  price: '',
+  currency: 'USD',
+  colors: '',
+  theme: '',
+  description: '',
 };
 
 // Validation function
 const validateForm = (formData) => {
   const errors = {};
-  
+
   if (!formData.file) {
-    errors.file = "Please upload an image of your artwork";
+    errors.file = 'Please upload an image of your artwork';
   }
-  
+
   if (!formData.title.trim()) {
-    errors.title = "Title is required";
+    errors.title = 'Title is required';
   }
-  
+
   if (!formData.type) {
-    errors.type = "Please select a type of art";
+    errors.type = 'Please select a type of art';
   }
-  
-  if (!formData.price || isNaN(Number(formData.price)) || Number(formData.price) < 0) {
-    errors.price = "Please enter a valid price";
+
+  if (
+    !formData.price ||
+    isNaN(Number(formData.price)) ||
+    Number(formData.price) < 0
+  ) {
+    errors.price = 'Please enter a valid price';
   }
-  
+
   if (!formData.colors.trim()) {
-    errors.colors = "Please describe the primary colors used";
+    errors.colors = 'Please describe the primary colors used';
   }
-  
+
   if (!formData.theme.trim()) {
-    errors.theme = "Please describe the theme or inspiration";
+    errors.theme = 'Please describe the theme or inspiration';
   }
-  
+
   if (!formData.description.trim()) {
-    errors.description = "Please provide a description of your artwork";
+    errors.description = 'Please provide a description of your artwork';
   }
-  
+
   return errors;
 };
 
 // Utility function for class names
 const cn = (...classes) => {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 };
 
 // Simple toast implementation to avoid dependency
@@ -76,20 +87,21 @@ const useToastSimple = () => {
     // You could implement a more visual toast here if needed
     alert(`${title}: ${description}`);
   };
-  
+
   return { toast };
 };
 
 const ArtUploadForm = () => {
   // Use the simplified toast implementation
   const { toast } = useToastSimple();
+  const { isCreating, createArt } = useCreateArt();
 
   const [formData, setFormData] = useState({
     ...DEFAULT_FORM_DATA,
     file: null,
-    filePreview: "",
-    selectedDescription: "",
-    description: "", // Added a dedicated description field
+    filePreview: '',
+    selectedDescription: '',
+    description: '', // Added a dedicated description field
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -101,84 +113,53 @@ const ArtUploadForm = () => {
       // Create a temporary URL for the file preview
       const previewUrl = URL.createObjectURL(file);
       setFormData({ ...formData, file, filePreview: previewUrl });
-      
+
       // Clear error if it exists
       if (errors.file) {
-        setErrors({ ...errors, file: "" });
+        setErrors({ ...errors, file: '' });
       }
     } else {
       // Clear file and preview if null is passed
-      setFormData({ ...formData, file: null, filePreview: "" });
+      setFormData({ ...formData, file: null, filePreview: '' });
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
+
     // Clear error for this field if it exists
     if (errors[name]) {
-      setErrors({ ...errors, [name]: "" });
+      setErrors({ ...errors, [name]: '' });
     }
   };
 
   const handleSelectChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
-    
+
     // Clear error for this field if it exists
     if (errors[name]) {
-      setErrors({ ...errors, [name]: "" });
+      setErrors({ ...errors, [name]: '' });
     }
   };
 
   const handleDescriptionSelect = (description) => {
-    setFormData({ 
-      ...formData, 
+    setFormData({
+      ...formData,
       selectedDescription: description,
-      description: description // Update the main description field when an AI description is selected
+      description: description, // Update the main description field when an AI description is selected
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Validate form
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      toast({
-        title: "Form validation failed",
-        description: "Please fix the errors and try again",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setSubmitting(true);
-    
-    // Simulate API call to Supabase
-    setTimeout(() => {
-      // In a real app, this would be a call to Supabase to store the data
-      console.log("Form data to be sent to Supabase:", formData);
-      
-      toast({
-        title: "Artwork submitted successfully!",
-        description: "Your artwork has been saved to the database",
-      });
-      
-      // Reset form
-      setFormData({
-        ...DEFAULT_FORM_DATA,
-        file: null,
-        filePreview: "",
-        selectedDescription: "",
-        description: "",
-      });
-      
-      setSubmitting(false);
-      setShowAiGenerator(false);
-    }, 2000);
-  };
+  function handleSubmit() {
+    createArt({
+      name: formData.title,
+      description: formData.description,
+      price: formData.price,
+      category: formData.type.toLowerCase(),
+      image: formData.file[0],
+    });
+  }
 
   // Clean up object URLs on unmount
   useEffect(() => {
@@ -217,7 +198,7 @@ const ArtUploadForm = () => {
                 value={formData.title}
                 onChange={handleInputChange}
                 placeholder="Enter the title of your artwork"
-                className={errors.title ? "border-destructive" : ""}
+                className={errors.title ? 'border-destructive' : ''}
               />
               {errors.title && (
                 <p className="text-xs text-destructive">{errors.title}</p>
@@ -231,11 +212,11 @@ const ArtUploadForm = () => {
               <Select
                 name="type"
                 value={formData.type}
-                onValueChange={(value) => handleSelectChange("type", value)}
+                onValueChange={(value) => handleSelectChange('type', value)}
               >
                 <SelectTrigger
                   id="type"
-                  className={errors.type ? "border-destructive" : ""}
+                  className={errors.type ? 'border-destructive' : ''}
                 >
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
@@ -266,12 +247,14 @@ const ArtUploadForm = () => {
                   min="0"
                   step="0.01"
                   placeholder="0.00"
-                  className={errors.price ? "border-destructive" : ""}
+                  className={errors.price ? 'border-destructive' : ''}
                 />
                 <Select
                   name="currency"
                   value={formData.currency}
-                  onValueChange={(value) => handleSelectChange("currency", value)}
+                  onValueChange={(value) =>
+                    handleSelectChange('currency', value)
+                  }
                 >
                   <SelectTrigger id="currency" className="w-[100px]">
                     <SelectValue placeholder="Currency" />
@@ -302,7 +285,7 @@ const ArtUploadForm = () => {
                 value={formData.colors}
                 onChange={handleInputChange}
                 placeholder="Describe the primary colors used (e.g., deep blues, vibrant reds)"
-                className={errors.colors ? "border-destructive" : ""}
+                className={errors.colors ? 'border-destructive' : ''}
               />
               {errors.colors && (
                 <p className="text-xs text-destructive">{errors.colors}</p>
@@ -320,8 +303,8 @@ const ArtUploadForm = () => {
                 onChange={handleInputChange}
                 placeholder="Describe the theme or inspiration behind your artwork"
                 className={cn(
-                  "min-h-[100px] resize-none",
-                  errors.theme ? "border-destructive" : ""
+                  'min-h-[100px] resize-none',
+                  errors.theme ? 'border-destructive' : ''
                 )}
               />
               {errors.theme && (
@@ -334,16 +317,22 @@ const ArtUploadForm = () => {
                 <Label htmlFor="description" className="text-base">
                   Artwork Description
                 </Label>
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   size="sm"
                   className="text-xs flex items-center gap-1 h-7 px-2 ml-2"
                   onClick={() => setShowAiGenerator(!showAiGenerator)}
-                  title={showAiGenerator ? "Hide AI Description Generator" : "Get help from AI"}
+                  title={
+                    showAiGenerator
+                      ? 'Hide AI Description Generator'
+                      : 'Get help from AI'
+                  }
                 >
                   <LucideSparkles className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline-block">{showAiGenerator ? "Hide AI Helper" : "AI Helper"}</span>
+                  <span className="hidden sm:inline-block">
+                    {showAiGenerator ? 'Hide AI Helper' : 'AI Helper'}
+                  </span>
                 </Button>
               </div>
               <Textarea
@@ -353,8 +342,8 @@ const ArtUploadForm = () => {
                 onChange={handleInputChange}
                 placeholder="Write a detailed description of your artwork"
                 className={cn(
-                  "min-h-[150px]",
-                  errors.description ? "border-destructive" : ""
+                  'min-h-[150px]',
+                  errors.description ? 'border-destructive' : ''
                 )}
               />
               {errors.description && (
@@ -366,7 +355,7 @@ const ArtUploadForm = () => {
           {showAiGenerator && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
             >
@@ -392,7 +381,7 @@ const ArtUploadForm = () => {
                 Submitting...
               </>
             ) : (
-              "Submit Artwork"
+              'Submit Artwork'
             )}
           </Button>
         </form>

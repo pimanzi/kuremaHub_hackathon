@@ -7,7 +7,6 @@ const Card = ({ art, id, users }) => {
   return (
     <div
       onClick={() => {
-        console.log('yes');
         navigate(`/art/${id}`);
       }}
       className="w-full lg:max-w-[450px] min-w-[200px] h-auto rounded-lg overflow-hidden shadow-lg relative group"

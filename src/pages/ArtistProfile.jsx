@@ -1,26 +1,18 @@
+import { useState } from 'react';
 import { Avatar } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Globe,
-  MapPin,
-  Check,
-  Plus,
-} from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuthUsers } from '@/features/Authentication/useAuthUsers';
 import { useArts } from '@/features/arts/useArts';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
-const ArtistProfile = () => {
+const Artistprofile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { authUsers, isLoading } = useAuthUsers();
   const { arts, isLoading: loadingArts } = useArts();
-  const isMobile = useIsMobile();
+
   if (isLoading || loadingArts)
     return (
       <div className="h-screen flex justify-center items-center">
@@ -28,17 +20,17 @@ const ArtistProfile = () => {
         <div className="loader"></div>
       </div>
     );
-  const artsShow = arts.filter((art) => art.userId === Number(id));
-
   const user = authUsers.filter((user) => user.id === Number(id))[0];
-
+  const artsShow = arts.filter((art) => art.userId === Number(id));
   return (
     <div className="min-h-screen bg-background">
       {/* Banner Area */}
-      <div className="flex items-center md:px-20 px-5  gap-4 text-3xl">
+      <div className="md:px-20 px-5 flex gap-3 items-center ">
         <IoMdArrowRoundBack
-          className="text-5xl hover:cursor-pointer"
-          onClick={() => navigate(-1)}
+          className=" text-3xl md:text-5xl hover:cursor-pointer"
+          onClick={() => {
+            navigate(-1);
+          }}
         ></IoMdArrowRoundBack>
         <h1 className="font-semibold text-3xl md:text-5xl py-10">Profile</h1>
       </div>
@@ -46,7 +38,7 @@ const ArtistProfile = () => {
       <div className="relative w-full md:px-20">
         <div className="w-full h-64 md:h-80 overflow-hidden md:rounded-xl">
           <img
-            src={'/images/cover.jpeg'}
+            src="/images/cover.jpeg"
             alt="Cover"
             className="w-full h-full object-cover"
           />
@@ -57,7 +49,7 @@ const ArtistProfile = () => {
           <Avatar className="h-40 w-40 border-4 border-background">
             <img
               src={user.avatar || '/images/default-user.jpg'}
-              alt="image"
+              alt="avatar"
               className="h-full w-full object-cover"
             />
           </Avatar>
@@ -72,20 +64,12 @@ const ArtistProfile = () => {
               {user.firstName + ' ' + user.lastName}
             </h1>
           </div>
-        </div>
-        <div className="bg-gray-800 h-[1px] px-36 mb-10"></div>
-        {/* Artworks Section */}
-        <div>
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">Artworks</h2>
-          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {artsShow.map((artwork) => (
               <Card
                 key={artwork.id}
                 className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer animate-fade-in"
-                onClick={() => handleArtworkClick(artwork.id)}
               >
                 <div className="aspect-square overflow-hidden">
                   <img
@@ -95,7 +79,7 @@ const ArtistProfile = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-medium text-lg">{artwork.title}</h3>
+                  <h3 className="font-medium text-lg">{artwork.name}</h3>
                   <p className="text-muted-foreground text-sm">
                     {artwork.description}
                   </p>
@@ -109,4 +93,4 @@ const ArtistProfile = () => {
   );
 };
 
-export default ArtistProfile;
+export default Artistprofile;

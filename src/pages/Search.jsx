@@ -19,11 +19,16 @@ export default function Search() {
             className="w-full"
           />
         </div>
-
-        <div className="flex items-center gap-2 bg-gray-800 py-2 px-5 rounded-full cursor-pointer">
+        <button
+          onClick={() => {
+            navigate('/account');
+          }}
+          className="flex items-center gap-2 bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors"
+        >
+          {' '}
           <GoPlus />
-          <p className='text-white'>Create Art</p>
-        </div>
+          <p className="text-white">Create Art</p>
+        </button>
       </nav>
 
       <SearchComp></SearchComp>

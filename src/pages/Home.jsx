@@ -93,7 +93,7 @@ const Home = () => {
             {' '}
             <button
               onClick={() => {
-                navigate('catalogue');
+                navigate('/catalogue');
               }}
               className="bg-primary text-neutral-white px-8 py-3 rounded-full hover:bg-accent transition-colors"
             >
