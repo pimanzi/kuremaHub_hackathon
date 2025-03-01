@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuthUsers } from '../Authentication/useAuthUsers';
 
-const Card = ({ art, id }) => {
+const Card = ({ art, id, users }) => {
+  const user = users.filter((user) => user.id === art.userId);
   const navigate = useNavigate();
   return (
     <div
@@ -27,8 +29,14 @@ const Card = ({ art, id }) => {
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-            <p>Artist</p>
+            <div className="w-8 h-8 bg-gray-300 rounded-full">
+              <img
+                src={user[0].avatar || '/images/default-user.jpg'}
+                alt="Artwork"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
+            <p>{user[0].firstName + ' ' + user[0].lastName}</p>
           </div>
           <div className="text-gray-600 bg-gray-200 rounded-full px-5 py-2">
             {art.category}
