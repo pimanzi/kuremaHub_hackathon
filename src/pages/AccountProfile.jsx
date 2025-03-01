@@ -16,21 +16,23 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useUser from '@/features/Authentication/useUser';
 import { useArts } from '@/features/arts/useArts';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { useAuthUsers } from '@/features/Authentication/useAuthUsers';
 
 const AccountProfile = () => {
+  const { authUsers, isLoading: loadingAuth } = useAuthUsers();
   const navigate = useNavigate();
   const { user, isLoading } = useUser();
   const { arts, isLoading: loadingArts } = useArts();
-  if (isLoading || loadingArts)
+  if (isLoading || loadingArts || loadingAuth)
     return (
       <div className="h-screen flex justify-center items-center">
         {' '}
         <div className="loader"></div>
       </div>
     );
-  console.log(user);
-  const id = user.id;
-  const artsShow = arts.filter((art) => art.userId === Number(id));
+
+  const realId = authUsers.filter((auth) => auth.authUserId === user.id)[0].id;
+  const artsShow = arts.filter((art) => art.userId === Number(realId));
   const handleUpdateInfo = () => {
     console.log('Update info clicked');
     // This would open an edit modal or navigate to edit page

@@ -16,15 +16,15 @@ import ArtPreview from '../components/ArtPreview';
 import { Save as LucideSave, Sparkles as LucideSparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useCreateArt } from '@/features/arts/useCreateArt';
+import supabase from '@/services/supabase';
+import { insertArt } from '@/services/apiArts';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import useUser from '@/features/Authentication/useUser';
+import { useAuthUsers } from '@/features/Authentication/useAuthUsers';
 
 // Types and constants moved to the component file
-const ART_TYPES = [
-  'Painting',
-  'Digital Art',
-  'Photography',
-  'Sculpture',
-  'Mixed Media',
-];
+const ART_TYPES = ['painting', 'photography', 'sculpture', 'fabric'];
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'ETH'];
 const DEFAULT_FORM_DATA = {
   title: '',
@@ -60,11 +60,13 @@ const validateForm = (formData) => {
     errors.price = 'Please enter a valid price';
   }
 
-  if (!formData.colors.trim()) {
+  // Only validate if colors are provided
+  if (formData.colors && !formData.colors.trim()) {
     errors.colors = 'Please describe the primary colors used';
   }
 
-  if (!formData.theme.trim()) {
+  // Only validate if theme is provided
+  if (formData.theme && !formData.theme.trim()) {
     errors.theme = 'Please describe the theme or inspiration';
   }
 
@@ -80,22 +82,10 @@ const cn = (...classes) => {
   return classes.filter(Boolean).join(' ');
 };
 
-// Simple toast implementation to avoid dependency
-const useToastSimple = () => {
-  const toast = ({ title, description, variant }) => {
-    console.log(`${variant || 'info'}: ${title} - ${description}`);
-    // You could implement a more visual toast here if needed
-    alert(`${title}: ${description}`);
-  };
-
-  return { toast };
-};
-
 const ArtUploadForm = () => {
-  // Use the simplified toast implementation
-  const { toast } = useToastSimple();
-  const { isCreating, createArt } = useCreateArt();
-
+  const { user } = useUser();
+  const id = user.id;
+  const { authUsers, isLoading } = useAuthUsers();
   const [formData, setFormData] = useState({
     ...DEFAULT_FORM_DATA,
     file: null,
@@ -106,6 +96,23 @@ const ArtUploadForm = () => {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showAiGenerator, setShowAiGenerator] = useState(false);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    return () => {
+      if (formData.filePreview) {
+        URL.revokeObjectURL(formData.filePreview);
+      }
+    };
+  }, [formData.filePreview]);
+  if (isLoading)
+    return (
+      <div className="h-screen flex justify-center items-center">
+        {' '}
+        <div className="loader"></div>
+      </div>
+    );
+  const realId = authUsers.filter((auth) => auth.authUserId === id)[0].id;
 
   // Handle file upload
   const handleFileChange = (file) => {
@@ -128,7 +135,6 @@ const ArtUploadForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Clear error for this field if it exists
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -137,7 +143,6 @@ const ArtUploadForm = () => {
   const handleSelectChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
 
-    // Clear error for this field if it exists
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -147,28 +152,41 @@ const ArtUploadForm = () => {
     setFormData({
       ...formData,
       selectedDescription: description,
-      description: description, // Update the main description field when an AI description is selected
+      description: description,
     });
   };
 
-  function handleSubmit() {
-    createArt({
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const obj = {
       name: formData.title,
       description: formData.description,
       price: formData.price,
       category: formData.type.toLowerCase(),
-      image: formData.file[0],
-    });
-  }
+      image: formData?.file,
+      userId: realId,
+    };
+
+    const formErrors = validateForm(formData);
+    setErrors(formErrors);
+
+    if (Object.keys(formErrors).length > 0) {
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await insertArt(obj);
+      toast.success('New art created successfully');
+      navigate(-1);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setSubmitting(false); // Reset submitting state
+    }
+  };
 
   // Clean up object URLs on unmount
-  useEffect(() => {
-    return () => {
-      if (formData.filePreview) {
-        URL.revokeObjectURL(formData.filePreview);
-      }
-    };
-  }, [formData.filePreview]);
 
   return (
     <div className="grid md:grid-cols-[1fr_auto] gap-10">
@@ -372,7 +390,7 @@ const ArtUploadForm = () => {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full text-white"
             disabled={submitting || !formData.file || !formData.description}
           >
             {submitting ? (
